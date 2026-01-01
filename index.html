@@ -1,1 +1,610 @@
-<!doctype html><meta charset='utf-8'/><title>LaunchKit</title><h1>LaunchKit</h1>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TOKEN</title>
+    <meta name="description" content="Created with MIAO LaunchKit" />
+    <meta property="og:title" content="TOKEN" />
+    <meta property="og:description" content="Created with MIAO LaunchKit" />
+    
+    <meta name="twitter:card" content="summary" />
+    
+    <style>
+      :root{
+        --primary:#16a34a;
+        --secondary:#0f172a;
+        --bg:#0b1220;
+        --card:rgba(255,255,255,.06);
+        --border:rgba(255,255,255,.12);
+        --text:#e5e7eb;
+        --muted:rgba(229,231,235,.75);
+        --shadow:0 20px 60px rgba(0,0,0,.35);
+        --radius:20px;
+        --button-radius:14px;
+        --feature-bg:rgba(255,255,255,.04);
+        --feature-border:rgba(255,255,255,.10);
+      }
+      *{box-sizing:border-box}
+      body{
+        margin:0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+        background:radial-gradient(900px 480px at 20% 10%, color-mix(in srgb, var(--primary) 34%, transparent), transparent 60%), radial-gradient(900px 480px at 80% 5%, color-mix(in srgb, var(--secondary) 40%, transparent), transparent 60%), #0b1220;
+        color: var(--text);
+      }
+      .wrap{max-width:1040px;margin:0 auto;padding:60px 20px}
+      .hero{
+        border:1px solid var(--border);
+        background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+        border-radius:var(--radius);
+        padding:28px;
+        overflow:hidden;
+        position:relative;
+        box-shadow:var(--shadow);
+        height: 100%;
+      }
+      .badge{
+        display:inline-flex;gap:10px;align-items:center;
+        padding:8px 12px;border-radius:999px;
+        border:1px solid rgba(255,255,255,.16);
+        background:rgba(0,0,0,.25);
+        font-weight:800;font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+      }
+      .badge i{display:inline-block;width:10px;height:10px;border-radius:999px;background:var(--primary);box-shadow:0 0 24px color-mix(in srgb, var(--primary) 60%, transparent)}
+      h1{margin:16px 0 6px;font-size:44px;line-height:1.05;letter-spacing:-0.02em}
+      p{margin:0;color:var(--muted);font-weight:600}
+      .grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:18px}
+      @media(min-width:860px){.grid{grid-template-columns:1.05fr .95fr}}
+      .card{border:1px solid var(--border);background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+      .k{color:var(--muted);font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+      .v{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-weight:800; word-break:break-all}
+      .btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+      a.btn{
+        display:inline-flex;align-items:center;justify-content:center;
+        padding:12px 14px;border-radius:var(--button-radius);
+        border:1px solid var(--border);
+        background:rgba(0,0,0,.20);
+        color:var(--text);text-decoration:none;font-weight:900;
+        box-shadow:var(--shadow);
+      }
+      a.btn.primary{
+        border-color:color-mix(in srgb, var(--primary) 55%, var(--border));
+        background:linear-gradient(90deg, color-mix(in srgb, var(--primary) 60%, transparent), color-mix(in srgb, var(--secondary) 50%, transparent));
+      }
+      /* Sections (full-width, not "cards in a grid") */
+      .lk-section{
+        border:1px solid rgba(255,255,255,.10);
+        background:rgba(255,255,255,.04);
+        border-radius:var(--radius);
+        padding:18px;
+        position:relative;
+        overflow:hidden;
+        height: 100%;
+      }
+      @media(min-width:860px){
+        .lk-section{padding:22px}
+      }
+      .lk-section-bg{
+        position:absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        opacity:0.15;
+        z-index:0;
+        pointer-events:none;
+      }
+      .lk-section-inner{
+        position:relative;
+        z-index:1;
+      }
+      .lk-bgimg{
+        position:absolute;
+        inset:0;
+        background-position:center;
+        background-repeat:no-repeat;
+        pointer-events:none;
+        z-index:0;
+      }
+      .lk-bggrad{
+        position:absolute;
+        inset:0;
+        pointer-events:none;
+        z-index:0;
+      }
+      .lk-glass{
+        position:absolute;
+        inset:0;
+        pointer-events:none;
+        z-index:0;
+      }
+      .lk-noise{
+        position:absolute;
+        inset:0;
+        pointer-events:none;
+        z-index:0;
+        /* Lightweight "grain" approximation (no external assets) */
+        background-image:
+          radial-gradient(circle at 20% 30%, rgba(255,255,255,.06) 0 1px, transparent 1px),
+          radial-gradient(circle at 60% 40%, rgba(0,0,0,.08) 0 1px, transparent 1px),
+          radial-gradient(circle at 30% 70%, rgba(255,255,255,.05) 0 1px, transparent 1px),
+          radial-gradient(circle at 80% 60%, rgba(0,0,0,.07) 0 1px, transparent 1px);
+        background-size: 18px 18px;
+        mix-blend-mode: overlay;
+      }
+      .lk-effect-blur .lk-bgimg,
+      .lk-effect-blur .lk-bggrad{
+        filter: blur(14px);
+        transform: scale(1.06);
+      }
+      .lk-section-title{
+        color:var(--muted);
+        font-weight:900;
+        font-size:12px;
+        text-transform:uppercase;
+        letter-spacing:.08em;
+        margin:0 0 10px;
+      }
+      .lk-rich{line-height:1.65}
+      .lk-rich img{max-width:100%;height:auto;border-radius:var(--radius)}
+      .lk-rich a{color:var(--text);font-weight:900}
+      .lk-rich a:hover{text-decoration:underline}
+      .lk-h1{margin:0 0 6px;font-size:32px;line-height:1.15;letter-spacing:-0.02em}
+      .lk-h2{margin:0 0 6px;font-size:22px;line-height:1.2;letter-spacing:-0.01em;color:var(--muted)}
+      .lk-image-caption{margin-top:10px;color:var(--muted);font-weight:800;font-size:12px}
+      .lk-divider{margin:18px 0;border-top:1px solid var(--border);opacity:.9}
+      .lk-spacer{width:100%}
+      .lk-cards{
+        display:grid;
+        grid-template-columns:repeat(var(--lk-cards-cols, 3), minmax(0, 1fr));
+        gap:12px;
+        margin-top:8px;
+      }
+      @media(max-width:860px){.lk-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+      @media(max-width:560px){.lk-cards{grid-template-columns:1fr}}
+      .lk-card{
+        border:1px solid var(--border);
+        background:rgba(0,0,0,.18);
+        border-radius:calc(var(--radius) - 6px);
+        padding:14px;
+        box-shadow:var(--shadow);
+      }
+      .lk-copy-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+      .lk-copy-value{display:block;padding:10px 12px;border-radius:12px;border:1px solid var(--border);background:rgba(0,0,0,.25);word-break:break-all}
+      .lk-copy-btn{
+        padding:10px 12px;border-radius:12px;border:1px solid var(--border);
+        background:color-mix(in srgb, var(--primary) 18%, rgba(0,0,0,.25));
+        color:var(--text);font-weight:900;cursor:pointer
+      }
+      .lk-copy-btn:hover{filter:brightness(1.08)}
+      .lk-note{color:var(--muted);font-weight:800;font-size:12px}
+      /* CTA */
+      .lk-cta{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+      .lk-cta-title{font-weight:1000;font-size:22px;letter-spacing:-0.01em}
+      .lk-cta-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+      /* Stats */
+      .lk-stats{display:grid;grid-template-columns:repeat(var(--lk-stats-cols,4), minmax(0, 1fr));gap:12px}
+      @media(max-width:860px){.lk-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+      @media(max-width:560px){.lk-stats{grid-template-columns:1fr}}
+      .lk-stat{border:1px solid var(--border);background:rgba(0,0,0,.18);border-radius:calc(var(--radius) - 6px);padding:14px;box-shadow:var(--shadow)}
+      .lk-stat-value{font-weight:1000;font-size:20px;letter-spacing:-0.02em}
+      .lk-stat-label{margin-top:6px;color:var(--muted);font-weight:900;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+      .lk-stat-note{margin-top:6px;color:var(--muted);font-weight:700;font-size:12px}
+      /* Features */
+      .lk-features{display:grid;grid-template-columns:repeat(var(--lk-features-cols,3), minmax(0,1fr));gap:12px}
+      @media(max-width:860px){.lk-features{grid-template-columns:repeat(2,minmax(0,1fr))}}
+      @media(max-width:560px){.lk-features{grid-template-columns:1fr}}
+      .lk-feature{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--border);background:rgba(0,0,0,.18);border-radius:calc(var(--radius) - 6px);padding:14px;box-shadow:var(--shadow)}
+      .lk-feature-dot{width:10px;height:10px;border-radius:999px;background:var(--primary);box-shadow:0 0 18px color-mix(in srgb, var(--primary) 60%, transparent);margin-top:6px;flex:0 0 auto}
+      .lk-feature-icon{width:28px;height:28px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-weight:1000}
+      .lk-feature-title{font-weight:1000;letter-spacing:-0.01em}
+      .lk-feature-desc{margin-top:6px;color:var(--muted);font-weight:650;line-height:1.45}
+      /* Testimonials */
+      .lk-testimonials{display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:12px}
+      @media(max-width:860px){.lk-testimonials{grid-template-columns:repeat(2,minmax(0,1fr))}}
+      @media(max-width:560px){.lk-testimonials{grid-template-columns:1fr}}
+      .lk-testimonial{border:1px solid var(--border);background:rgba(0,0,0,.18);border-radius:calc(var(--radius) - 6px);padding:14px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px}
+      .lk-testimonial-quote{line-height:1.6;font-weight:700}
+      .lk-testimonial-meta{display:flex;gap:10px;align-items:center}
+      .lk-testimonial-avatar{width:34px;height:34px;border-radius:999px;border:1px solid var(--border);object-fit:cover;background:rgba(255,255,255,.06)}
+      .lk-testimonial-avatar.ph{display:inline-block}
+      .lk-testimonial-name{font-weight:1000}
+      .lk-testimonial-role{color:var(--muted);font-weight:800;font-size:12px}
+      .lk-placeholder-nested{
+        background:rgba(255,255,255,0.02);
+        transition:all 0.2s;
+        border: 2px dashed var(--border) !important;
+      }
+      .lk-placeholder-nested:hover{
+        background:rgba(255,255,255,0.05);
+        border-color:var(--primary) !important;
+      }
+      .lk-children{
+        min-height: 5px;
+        transition: padding 0.2s;
+      }
+      .lk-children:empty{
+        padding: 10px;
+      }
+      .lk-row{
+        display:grid;
+        grid-template-columns:repeat(12,minmax(0,1fr));
+        gap:12px;
+        align-items:stretch;
+        margin-top:22px;
+        width: 100%;
+      }
+      .lk-cell{
+        min-width:0;
+        display:flex;
+        flex-direction:column;
+        height: 100%;
+      }
+      .lk-cell > * { 
+        flex: 1; 
+        margin-top: 0 !important;
+        width: 100%;
+      }
+      @media(max-width:860px){
+        .lk-cell{grid-column:span 12 !important}
+      }
+      @media(max-width:679px){
+        .lk-section-bg{opacity:0.1}
+      }
+      .footer{margin-top:22px;color:var(--muted);font-weight:700;font-size:12px}
+      .hero-img{width:100%;max-width:520px;border-radius:var(--radius);border:1px solid var(--border);background:var(--card);box-shadow:var(--shadow);object-fit:cover}
+      /* Header & Nav (Mobile First) */
+      .site-header{
+        width:100%;
+        padding:16px 20px;
+        background:var(--card);
+        border:1px solid var(--border);
+        border-radius:var(--radius);
+        position:relative;
+        z-index:100;
+        height: 100%;
+      }
+      .site-header.sticky{
+        position:sticky;
+        top:0;
+        border-radius:0 0 var(--radius) var(--radius);
+        margin-top:0 !important;
+        width:calc(100% + 40px);
+        margin-left:-20px;
+        height: auto;
+      }
+      .header-content{
+        max-width:1040px;
+        margin:0 auto;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:16px;
+        flex-wrap:wrap;
+      }
+      .header-logo{
+        max-height:40px;
+        width:auto;
+        object-fit:contain;
+      }
+      .nav-menu{
+        display:flex;
+        flex-direction:column;
+        gap:8px;
+        width:100%;
+        margin-top:12px;
+      }
+      @media(min-width:640px){
+        .nav-menu{
+          flex-direction:row;
+          width:auto;
+          margin-top:0;
+        }
+      }
+      .nav-item{
+        padding:8px 12px;
+        color:var(--text);
+        text-decoration:none;
+        font-weight:700;
+        font-size:14px;
+        border-radius:8px;
+        transition:background 0.2s;
+      }
+      .nav-item:hover{
+        background:rgba(255,255,255,.08);
+      }
+      /* Custom Blocks */
+      .custom-block{
+        padding:20px;
+        border-radius:var(--radius);
+        border:1px solid var(--border);
+        height: 100%;
+      }
+      .custom-block.hero{
+        padding:40px 20px;
+        text-align:center;
+      }
+      @media(min-width:640px){
+        .custom-block.hero{
+          padding:60px 40px;
+        }
+      }
+      .custom-block img{
+        max-width:100%;
+        height:auto;
+        border-radius:var(--radius);
+        margin:12px 0;
+      }
+      /* Footer */
+      .site-footer{
+        padding:24px 20px;
+        border:1px solid var(--border);
+        background:var(--card);
+        border-radius:var(--radius);
+        height: 100%;
+      }
+      .footer-content{
+        max-width:1040px;
+        margin:0 auto;
+        text-align:center;
+      }
+      .footer-links{
+        display:flex;
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:16px;
+        margin-top:12px;
+      }
+      .footer-link{
+        color:var(--muted);
+        text-decoration:none;
+        font-weight:700;
+        font-size:12px;
+      }
+      .footer-link:hover{
+        color:var(--text);
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      (function(){
+        // --- Selection + inline editing (Notion-like, light) ---
+        function closestDataSection(el){
+          while(el && el !== document.body){
+            if(el.getAttribute && el.getAttribute('data-section')) return el.getAttribute('data-section');
+            el = el.parentElement;
+          }
+          return '';
+        }
+
+        document.addEventListener('click', function(e){
+          try {
+            var ds = closestDataSection(e.target);
+            if(ds && window.parent) window.parent.postMessage({ type: 'LK_SELECT', dataSection: ds }, '*');
+          } catch(err) {}
+        }, true);
+
+        function makeEditable(el){
+          if(!el || el.getAttribute('data-lk-editable') === '1') return;
+          el.setAttribute('data-lk-editable','1');
+          el.setAttribute('contenteditable','true');
+          el.style.outline = 'none';
+          el.style.cursor = 'text';
+          el.addEventListener('blur', function(){
+            try {
+              var blockId = el.getAttribute('data-edit-block') || '';
+              var field = el.getAttribute('data-edit-field') || '';
+              if(!blockId || !field) return;
+              var value = (field === 'title' || field === 'data.label') ? (el.textContent || '') : (el.innerHTML || '');
+              if(window.parent) window.parent.postMessage({ type: 'LK_EDIT', blockId: blockId, field: field, value: value }, '*');
+            } catch(err) {}
+          });
+        }
+
+        // Mark editable nodes
+        try {
+          var nodes = document.querySelectorAll('[data-edit-block][data-edit-field]');
+          nodes.forEach(function(n){ makeEditable(n); });
+        } catch(err) {}
+
+        function copy(text){
+          try { return navigator.clipboard.writeText(text); } catch(e) {}
+          var ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position='fixed'; ta.style.opacity='0';
+          document.body.appendChild(ta);
+          ta.focus(); ta.select();
+          try { document.execCommand('copy'); } catch(e) {}
+          document.body.removeChild(ta);
+        }
+        document.addEventListener('click', function(e){
+          var btn = e.target && e.target.closest ? e.target.closest('[data-copy]') : null;
+          if(!btn) return;
+          var v = btn.getAttribute('data-copy') || '';
+          if(!v) return;
+          copy(v);
+          var old = btn.textContent;
+          btn.textContent = 'Copiado';
+          setTimeout(function(){ btn.textContent = old; }, 900);
+        });
+      })();
+    </script>
+    <div class="wrap">
+      <div class="lk-row"><div class="lk-cell" style="grid-column:span 12"><header class="site-header sticky" data-section="header" data-lk-root="1" id="header">
+        <div class="header-content">
+          <img src="https://raw.githubusercontent.com/miaodotarmy/tt-14/gh-pages/media/logo-img-b5823c61fb695f0fec5529493c7ca1a4.jpg" alt="TT" class="header-logo" loading="lazy" />
+          <nav class="nav-menu">
+            <a href="#tokenomics" class="nav-item">Tokenomics</a><a href="#howtobuy" class="nav-item">How to Buy</a><a href="#roadmap" class="nav-item">Roadmap</a><a href="#faq" class="nav-item">FAQ</a>
+          </nav>
+        </div>
+      </header></div></div><div class="lk-row"><div class="lk-cell" style="grid-column:span 6"><div class="hero" data-section="hero" data-lk-root="1" id="hero">
+        <span class="badge"><i></i> Hero Pulse • Free</span>
+        <h1>TOKEN</h1>
+        <p>Created with MIAO LaunchKit</p>
+        <div class="btns">
+          <a class="btn primary" href="#buy">Buy TOKEN</a>
+          
+          
+        </div>
+        <div class="grid" style="margin-top:20px">
+          <div class="card">
+            <div class="k">Token name</div>
+            <div class="v">Your Token</div>
+            <div class="k" style="margin-top:10px;">Symbol</div>
+            <div class="v">TOKEN</div>
+          </div>
+          <div class="card" style="display:flex;flex-direction:row;gap:12px;align-items:flex-start">
+            <div style="flex:1;min-width:0">
+              <div class="k">Why TOKEN</div>
+              <p style="margin-top:8px;line-height:1.6">Created with MIAO LaunchKit</p>
+              <div class="btns" style="margin-top:12px">
+                <a class="btn" href="#tokenomics">Tokenomics</a><a class="btn" href="#howtobuy">How to Buy</a><a class="btn" href="#roadmap">Roadmap</a><a class="btn" href="#team">Team</a><a class="btn" href="#faq">Faq</a>
+              </div>
+            </div>
+            <div style="flex:1;min-width:0;display:flex;justify-content:flex-end"><img src="media/hero-img-4fd088f258cc542d892d48608b68bd7b.jpg" alt="TOKEN" class="hero-img" loading="lazy" /></div>
+          </div>
+        </div>
+      </div></div><div class="lk-cell" style="grid-column:span 6"><section class="lk-section custom-block subtitle" id="custom-2a2423df-381b-4854-abe0-325fc9bf010a" data-section="custom:2a2423df-381b-4854-abe0-325fc9bf010a" data-lk-root="1" style="background-color:transparent;color:var(--text);padding:20px"><div class="lk-bgimg" style="opacity:1;background-image:url(./public/launchkit/backgrounds/dapp/bg-098a6afab9fd93ba.jpg);background-size:cover;background-position:center;background-repeat:no-repeat;"></div><div class="lk-section-inner">
+        <h3 class="lk-h2" data-edit-block="2a2423df-381b-4854-abe0-325fc9bf010a" data-edit-field="title">Seccao1</h3>
+        
+        <div class="lk-children"><section class="lk-section custom-block title" id="custom-ad0ef66f-cd09-47aa-a07b-a5d030351658" data-section="custom:ad0ef66f-cd09-47aa-a07b-a5d030351658" data-lk-root="0" data-lk-parent="2a2423df-381b-4854-abe0-325fc9bf010a" style="background-color:transparent;color:var(--text);padding:20px"><div class="lk-section-inner">
+        <h2 class="lk-h1" data-edit-block="ad0ef66f-cd09-47aa-a07b-a5d030351658" data-edit-field="title">Título</h2>
+        
+        
+      </div></section></div>
+      </div></section></div></div><div class="lk-row"><div class="lk-cell" style="grid-column:span 6"><section class="lk-section custom-block features" id="custom-features-81d058bc-74cc-4532-b3ab-bd89eeec7be2" data-section="custom:features-81d058bc-74cc-4532-b3ab-bd89eeec7be2" data-lk-root="1" style="background-color:transparent;color:var(--text);padding:20px"><div class="lk-section-inner">
+        <div class="lk-section-title">Features</div>
+        <div class="lk-features" style="--lk-features-cols:3"><div class="lk-feature">
+            <div class="lk-feature-dot"></div>
+            <div>
+              <div class="lk-feature-title">Transparência</div>
+              <div class="lk-feature-desc">Links oficiais, dados claros e foco em confiança para TOKEN.</div>
+            </div>
+          </div><div class="lk-feature">
+            <div class="lk-feature-dot"></div>
+            <div>
+              <div class="lk-feature-title">Velocidade</div>
+              <div class="lk-feature-desc">Site rápido (single-file) e pronto para GitHub Pages.</div>
+            </div>
+          </div><div class="lk-feature">
+            <div class="lk-feature-dot"></div>
+            <div>
+              <div class="lk-feature-title">Conversão</div>
+              <div class="lk-feature-desc">CTA, prova social e secções estruturadas para converter.</div>
+            </div>
+          </div></div>
+        
+      </div></section></div><div class="lk-cell" style="grid-column:span 6"><section class="lk-section custom-block stats" id="custom-stats-63bdafb0-2130-48c8-b334-c67e6b12d376" data-section="custom:stats-63bdafb0-2130-48c8-b334-c67e6b12d376" data-lk-root="1" style="background-color:transparent;color:var(--text);padding:20px"><div class="lk-section-inner">
+        <div class="lk-section-title">Métricas</div>
+        <div class="lk-stats" style="--lk-stats-cols:4"><div class="lk-stat">
+            <div class="lk-stat-value">TOKEN</div>
+            <div class="lk-stat-label">Ticker</div>
+            
+          </div><div class="lk-stat">
+            <div class="lk-stat-value">1,000,000,000</div>
+            <div class="lk-stat-label">Supply</div>
+            
+          </div><div class="lk-stat">
+            <div class="lk-stat-value">0 / 0</div>
+            <div class="lk-stat-label">Tax</div>
+            
+          </div><div class="lk-stat">
+            <div class="lk-stat-value">Solana</div>
+            <div class="lk-stat-label">Chain</div>
+            
+          </div></div>
+        
+      </div></section></div></div><div class="lk-row"><div class="lk-cell" style="grid-column:span 12"><section class="lk-section custom-block testimonials" id="custom-testimonials-e45884d8-a182-484e-81e8-30e53df5e3a3" data-section="custom:testimonials-e45884d8-a182-484e-81e8-30e53df5e3a3" data-lk-root="1" style="background-color:transparent;color:var(--text);padding:20px"><div class="lk-section-inner">
+        <div class="lk-section-title">O que a comunidade diz</div>
+        <div class="lk-testimonials"><div class="lk-testimonial">
+            <div class="lk-testimonial-quote">“Clareza e design consistente. Muito mais confiável.”</div>
+            <div class="lk-testimonial-meta">
+              <div class="lk-testimonial-avatar ph"></div>
+              <div class="lk-testimonial-who">
+                <div class="lk-testimonial-name">Ana</div>
+                <div class="lk-testimonial-role">Community</div>
+              </div>
+            </div>
+          </div><div class="lk-testimonial">
+            <div class="lk-testimonial-quote">“Em 2 minutos estava no ar. O layout já vem pronto.”</div>
+            <div class="lk-testimonial-meta">
+              <div class="lk-testimonial-avatar ph"></div>
+              <div class="lk-testimonial-who">
+                <div class="lk-testimonial-name">Bruno</div>
+                <div class="lk-testimonial-role">Trader</div>
+              </div>
+            </div>
+          </div><div class="lk-testimonial">
+            <div class="lk-testimonial-quote">“Editar como Notion é viciante — rápido e previsível.”</div>
+            <div class="lk-testimonial-meta">
+              <div class="lk-testimonial-avatar ph"></div>
+              <div class="lk-testimonial-who">
+                <div class="lk-testimonial-name">Carla</div>
+                <div class="lk-testimonial-role">Builder</div>
+              </div>
+            </div>
+          </div></div>
+        
+      </div></section></div></div><div class="lk-row"><div class="lk-cell" style="grid-column:span 12"><section class="lk-section custom-block cta" id="custom-cta-eb11a54f-f3d5-42d0-b56b-1d78d432799a" data-section="custom:cta-eb11a54f-f3d5-42d0-b56b-1d78d432799a" data-lk-root="1" style="background-color:transparent;color:var(--text);padding:20px"><div class="lk-section-inner lk-cta">
+        <div class="lk-cta-left">
+          <div class="lk-cta-title">Pronto para comprar TOKEN?</div>
+          <div class="lk-rich">Atualiza os links (DEX / Solscan) e publica. Tudo o resto já está estruturado.</div>
+        </div>
+        <div class="lk-cta-actions">
+          <a class="btn primary" href="#buy">Comprar agora</a>
+          <a class="btn" href="#">Ver Solscan</a>
+        </div>
+      </div></section></div></div><div class="lk-row"><div class="lk-cell" style="grid-column:span 12"><section class="lk-section" id="tokenomics" data-section="tokenomics" data-lk-root="1">
+            <img src="./media/tokenomics-bg-49314e6145ca76281ba62ef994c7e5e8.png" alt="" class="lk-section-bg" loading="lazy" />
+            <div class="lk-section-inner">
+              <div class="lk-section-title">Tokenomics</div>
+              <div class="lk-rich">Supply: configurável
+Liquidez: recomendado lock
+Taxa: ideal 0/0 para UX melhor</div>
+            </div>
+          </section></div></div><div class="lk-row"><div class="lk-cell" style="grid-column:span 12"><section class="lk-section" id="howtobuy" data-section="howToBuy" data-lk-root="1">
+            
+            <div class="lk-section-inner">
+              <div class="lk-section-title">How to Buy</div>
+              <div class="lk-rich">1) Abre a wallet
+2) Adiciona o mint: TBA
+3) Confirma no DEX.</div>
+            </div>
+          </section></div></div><div class="lk-row"><div class="lk-cell" style="grid-column:span 12"><section class="lk-section" id="roadmap" data-section="roadmap" data-lk-root="1">
+            
+            <div class="lk-section-inner">
+              <div class="lk-section-title">Roadmap</div>
+              <div class="lk-rich">• Launch & comunidade
+• Listings & liquidez
+• Utilidades & parcerias</div>
+            </div>
+          </section></div></div><div class="lk-row"><div class="lk-cell" style="grid-column:span 12"><section class="lk-section" id="team" data-section="team" data-lk-root="1">
+            
+            <div class="lk-section-inner">
+              <div class="lk-section-title">Team</div>
+              <div class="lk-rich">Apresenta quem está por trás do projeto. Transparência aumenta confiança.</div>
+            </div>
+          </section></div></div><div class="lk-row"><div class="lk-cell" style="grid-column:span 12"><section class="lk-section" id="faq" data-section="faq" data-lk-root="1">
+            
+            <div class="lk-section-inner">
+              <div class="lk-section-title">FAQ</div>
+              <div class="lk-rich">Dúvidas frequentes sobre compra, segurança e próximos passos.</div>
+            </div>
+          </section></div></div><div class="lk-row"><div class="lk-cell" style="grid-column:span 12"><footer class="site-footer" data-section="footer" data-lk-root="1" id="footer">
+        <div class="footer-content">
+          <div style="font-weight:900;opacity:.9">Site oficial</div>
+          <div><p>Atualiza estes links para os canais oficiais do projeto.</p></div>
+          <div class="footer-links">
+                <a href="./privacy-policy" class="footer-link">Privacy Policy</a>
+              </div>
+          <div class="footer-links" style="margin-top:8px">
+                <a href="#" class="footer-link" target="_blank" rel="noopener noreferrer">twitter</a><a href="#" class="footer-link" target="_blank" rel="noopener noreferrer">telegram</a><a href="#" class="footer-link" target="_blank" rel="noopener noreferrer">website</a>
+              </div>
+        </div>
+      </footer></div></div>
+      
+    </div>
+  </body>
+</html>
